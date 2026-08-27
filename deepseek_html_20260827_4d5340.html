@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Videos Far - ShopGunBanana</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: Arial;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .logo {
+            font-size: 34px;
+            font-weight: bold;
+            color: #ff6b6b;
+        }
+        .logo span { color: #fff; }
+        .logo small {
+            font-size: 14px;
+            color: #ffd93d;
+            display: block;
+            font-weight: normal;
+        }
+        .channel-info {
+            background: rgba(255,255,255,0.1);
+            padding: 10px 20px;
+            border-radius: 15px;
+            color: #fff;
+            text-align: center;
+        }
+        .channel-info .name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffd93d;
+        }
+        .channel-info .subs {
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+        }
+        .search {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .search input {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.12);
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+        }
+        .search input::placeholder { color: rgba(255,255,255,0.5); }
+        .search button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 30px;
+            background: #ff6b6b;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .search button:hover { background: #ff5252; transform: scale(1.05); }
+        .video-box {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #000;
+            border: 3px solid rgba(255,215,0,0.3);
+        }
+        .video-box iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .subscriber-counter {
+            background: rgba(255,215,0,0.15);
+            border: 2px solid rgba(255,215,0,0.3);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+            color: #fff;
+        }
+        .subscriber-counter .big-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: #ffd93d;
+            text-shadow: 0 0 30px rgba(255,215,0,0.3);
+        }
+        .subscriber-counter .label {
+            font-size: 16px;
+            color: rgba(255,255,255,0.7);
+        }
+        .links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+            justify-content: center;
+        }
+        .links button {
+            padding: 8px 18px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 20px;
+            background: transparent;
+            color: #fff;
+            cursor: pointer;
+            font-size: 13px;
+            transition: 0.3s;
+        }
+        .links button:hover { background: #ff6b6b; border-color: #ff6b6b; }
+        .info {
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            margin-top: 15px;
+            font-size: 13px;
+        }
+        .banana-icon { font-size: 24px; }
+        @media (max-width: 600px) {
+            .header { flex-direction: column; text-align: center; }
+            .logo { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- HEADER -->
+    <div class="header">
+        <div class="logo">
+            🍌 Videos <span>Far</span>
+            <small>🎯 ShopGunBanana Kanali</small>
+        </div>
+        <div class="channel-info">
+            <div class="name">🍌 ShopGunBanana</div>
+            <div class="subs">📍 YouTube Kanalı</div>
+        </div>
+    </div>
+
+    <!-- ABONE SAYACI -->
+    <div class="subscriber-counter">
+        <div class="label">📊 TAHMİNİ ABONE SAYISI</div>
+        <div class="big-number" id="subCount">???</div>
+        <div class="label">🎯 Sence kaç abonem var? 👇</div>
+    </div>
+
+    <!-- ARAMA -->
+    <div class="search">
+        <input type="text" id="videoInput" placeholder="Video ID girin veya URL yapıştırın...">
+        <button onclick="loadVideo()">▶ İzle</button>
+    </div>
+
+    <!-- VİDEO OYNATICI - ShopGunBanana Kanalından -->
+    <div class="video-box">
+        <iframe id="videoFrame" 
+                src="https://www.youtube.com/embed?listType=user_uploads&list=UCXXXXXXXXXX" 
+                allowfullscreen>
+        </iframe>
+    </div>
+
+    <!-- HIZLI LİNKLER -->
+    <div class="links">
+        <button onclick="changeVideo('dQw4w9WgXcQ')">🎵 Müzik</button>
+        <button onclick="changeVideo('kJQP7kiw5Fk')">🎤 Pop</button>
+        <button onclick="changeVideo('fJ9rUzIMcZQ')">🎸 Rock</button>
+        <button onclick="openChannel()">📺 Kanalı Aç</button>
+    </div>
+
+    <div class="info">
+        🍌 <strong>ShopGunBanana</strong> - YouTube kanalınızdan videolar burada!
+        <br>⬇️ Tahminini yaz ve abone sayını keşfet!
+    </div>
+</div>
+
+<script>
+    // VİDEO YÜKLEME FONKSİYONU
+    function loadVideo() {
+        const input = document.getElementById('videoInput').value.trim();
+        const frame = document.getElementById('videoFrame');
+        if (!input) { alert('🎯 Video ID veya URL girin!'); return; }
+        let id = input;
+        if (id.includes('v=')) id = id.split('v=')[1].split('&')[0];
+        if (id.includes('youtu.be/')) id = id.split('youtu.be/')[1].split('?')[0];
+        if (id.includes('/embed/')) id = id.split('/embed/')[1].split('?')[0];
+        if (id.length !== 11) { 
+            // Eğer ID geçersizse kanal oynatma listesini göster
+            alert('⚠️ Geçersiz ID! Kanal videoları açılıyor...');
+            frame.src = 'https://www.youtube.com/embed?listType=user_uploads&list=UCXXXXXXXXXX';
+            return;
+        }
+        frame.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1';
+        document.getElementById('videoInput').value = '';
+    }
+
+    function changeVideo(id) {
+        document.getElementById('videoFrame').src = 'https://www.youtube.com/embed/' + id + '?autoplay=1';
+        document.getElementById('videoInput').value = '';
+    }
+
+    function openChannel() {
+        window.open('https://www.youtube.com/@ShopGunBanana', '_blank');
+    }
+
+    // Enter tuşu
+    document.getElementById('videoInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') loadVideo();
+    });
+
+    // 🔥 Rastgele abone sayısı tahmini (eğlence)
+    function randomSubscriber() {
+        const possible = [
+            '10', '25', '50', '75', '100', '150', '200', '350', '500', 
+            '750', '1.000', '1.500', '2.000', '5.000', '10.000', '25.000',
+            '50.000', '100.000', '250.000', '500.000', '1.000.000'
+        ];
+        return possible[Math.floor(Math.random() * possible.length)];
+    }
+
+    // Sayfa yüklenince abone sayısını göster
+    window.onload = function() {
+        const subCount = document.getElementById('subCount');
+        subCount.textContent = randomSubscriber() + '+';
+        subCount.style.cursor = 'pointer';
+        subCount.title = 'Tıkla ve yeni tahmin gör!';
+        subCount.onclick = function() {
+            this.textContent = randomSubscriber() + '+';
+            this.style.transform = 'scale(1.2)';
+            setTimeout(() => { this.style.transform = 'scale(1)'; }, 300);
+        };
+    };
+</script>
+
+</body>
+</html>
