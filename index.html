@@ -1,267 +1,1297 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Videos Far - ShopGunBanana</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows 11 - Videos Far</title>
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
         body {
-            font-family: Arial;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .container {
-            max-width: 1000px;
-            width: 100%;
-            background: rgba(255,255,255,0.08);
-            backdrop-filter: blur(10px);
-            border-radius: 25px;
-            padding: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-        }
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        .logo {
-            font-size: 34px;
-            font-weight: bold;
-            color: #ff6b6b;
-        }
-        .logo span { color: #fff; }
-        .logo small {
-            font-size: 14px;
-            color: #ffd93d;
-            display: block;
-            font-weight: normal;
-        }
-        .channel-info {
-            background: rgba(255,255,255,0.1);
-            padding: 10px 20px;
-            border-radius: 15px;
-            color: #fff;
-            text-align: center;
-        }
-        .channel-info .name {
-            font-size: 18px;
-            font-weight: bold;
-            color: #ffd93d;
-        }
-        .channel-info .subs {
-            font-size: 14px;
-            color: rgba(255,255,255,0.7);
-        }
-        .search {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .search input {
-            flex: 1;
-            padding: 14px 20px;
-            border: none;
-            border-radius: 30px;
-            background: rgba(255,255,255,0.12);
-            color: #fff;
-            font-size: 16px;
-            outline: none;
-        }
-        .search input::placeholder { color: rgba(255,255,255,0.5); }
-        .search button {
-            padding: 14px 30px;
-            border: none;
-            border-radius: 30px;
-            background: #ff6b6b;
-            color: #fff;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .search button:hover { background: #ff5252; transform: scale(1.05); }
-        .video-box {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            border-radius: 15px;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #1a1a2e;
+            height: 100vh;
             overflow: hidden;
-            background: #000;
-            border: 3px solid rgba(255,215,0,0.3);
         }
-        .video-box iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+
+        /* === MASAÜSTÜ === */
+        .desktop {
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* === MASAÜSTÜ SIMGELERİ === */
+        .desktop-icons {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 20px;
+            flex-wrap: wrap;
+            height: calc(100vh - 60px);
+            align-content: flex-start;
+        }
+        .desktop-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80px;
+            padding: 10px 5px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #fff;
+            text-align: center;
+            font-size: 12px;
+            background: transparent;
             border: none;
         }
-        .subscriber-counter {
-            background: rgba(255,215,0,0.15);
-            border: 2px solid rgba(255,215,0,0.3);
-            border-radius: 15px;
-            padding: 15px;
-            margin: 20px 0;
-            text-align: center;
-            color: #fff;
+        .desktop-icon:hover {
+            background: rgba(255, 255, 255, 0.08);
         }
-        .subscriber-counter .big-number {
-            font-size: 48px;
-            font-weight: bold;
-            color: #ffd93d;
-            text-shadow: 0 0 30px rgba(255,215,0,0.3);
+        .desktop-icon .icon {
+            font-size: 44px;
+            margin-bottom: 4px;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
         }
-        .subscriber-counter .label {
-            font-size: 16px;
-            color: rgba(255,255,255,0.7);
+        .desktop-icon .label {
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+            word-wrap: break-word;
+            max-width: 80px;
+            font-size: 11px;
+            line-height: 1.3;
         }
-        .links {
+
+        /* === PENCERE === */
+        .window {
+            position: absolute;
+            min-width: 350px;
+            min-height: 250px;
+            background: rgba(28, 28, 44, 0.96);
+            backdrop-filter: blur(30px);
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.7);
+            display: none;
+            overflow: hidden;
+            z-index: 10;
+            resize: both;
+        }
+        .window.active {
+            display: block;
+            z-index: 100;
+        }
+        .window.maximized {
+            width: 100% !important;
+            height: calc(100vh - 60px) !important;
+            top: 0 !important;
+            left: 0 !important;
+            border-radius: 0;
+        }
+
+        .window-header {
             display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            cursor: move;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            height: 38px;
         }
-        .links button {
-            padding: 8px 18px;
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 20px;
+        .window-title {
+            color: #fff;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .window-controls {
+            display: flex;
+            gap: 6px;
+        }
+        .window-controls button {
+            width: 28px;
+            height: 28px;
+            border: none;
+            border-radius: 50%;
             background: transparent;
             color: #fff;
+            font-size: 14px;
             cursor: pointer;
+            transition: 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .window-controls .min:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .window-controls .max:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .window-controls .cls:hover {
+            background: #e81123;
+        }
+
+        .window-body {
+            padding: 16px;
+            color: #fff;
+            height: calc(100% - 38px);
+            overflow: auto;
+        }
+
+        /* === SNAP LAYOUT === */
+        .snap-grid {
+            display: grid;
+            gap: 6px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+        .snap-grid .snap-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.4);
             font-size: 13px;
+            border: 1px dashed rgba(255, 255, 255, 0.06);
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .snap-grid .snap-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        .snap-grid-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+        .snap-grid-3 {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+        .snap-grid-4 {
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+
+        /* === COPILOT === */
+        .copilot-chat {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            height: 100%;
+        }
+        .copilot-messages {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 4px;
+            max-height: 300px;
+        }
+        .copilot-msg {
+            padding: 10px 14px;
+            border-radius: 12px;
+            max-width: 85%;
+            font-size: 14px;
+            line-height: 1.5;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .copilot-msg.user {
+            background: rgba(255, 107, 107, 0.2);
+            align-self: flex-end;
+            border: 1px solid rgba(255, 107, 107, 0.15);
+        }
+        .copilot-msg.ai {
+            background: rgba(255, 255, 255, 0.05);
+            align-self: flex-start;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .copilot-msg .label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 4px;
+        }
+        .copilot-input {
+            display: flex;
+            gap: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .copilot-input input {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.06);
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+        }
+        .copilot-input input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+        .copilot-input button {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+        .copilot-input button:hover {
+            transform: scale(1.04);
+        }
+
+        /* === DOSYA GEZGİNİ === */
+        .file-explorer {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .file-tabs {
+            display: flex;
+            gap: 4px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 8px;
+        }
+        .file-tabs .tab {
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: 0.2s;
+            background: transparent;
+            border: none;
+        }
+        .file-tabs .tab:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .file-tabs .tab.active {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 12px;
+        }
+        .file-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 12px 6px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .file-item:hover {
+            background: rgba(255, 255, 255, 0.07);
+        }
+        .file-item .ficon {
+            font-size: 36px;
+            margin-bottom: 4px;
+        }
+        .file-item .fname {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            word-break: break-all;
+        }
+        .file-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding: 8px 0;
+        }
+        .file-actions button {
+            padding: 6px 16px;
+            border: none;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            cursor: pointer;
+            font-size: 12px;
+            transition: 0.2s;
+        }
+        .file-actions button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .file-actions button.danger {
+            color: #ff6b6b;
+        }
+        .file-actions button.danger:hover {
+            background: rgba(255, 107, 107, 0.15);
+        }
+        .file-upload-area {
+            border: 2px dashed rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.3);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .file-upload-area.dragover {
+            border-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.05);
+        }
+
+        /* === WIDGET === */
+        .widget-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .widget-card {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 14px;
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .widget-card .wtitle {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 6px;
+        }
+        .widget-card .wvalue {
+            font-size: 22px;
+            font-weight: 600;
+        }
+        .widget-card .wvalue.weather {
+            color: #4d96ff;
+        }
+        .widget-card .wvalue.stock {
+            color: #6bcb77;
+        }
+        .widget-card .wvalue.sport {
+            color: #ffd93d;
+        }
+
+        /* === İZİN AYARLARI === */
+        .perm-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .perm-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+        }
+        .perm-item .pname {
+            font-size: 14px;
+        }
+        .perm-item .pstatus {
+            font-size: 13px;
+            padding: 4px 14px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .perm-item .pstatus.on {
+            background: rgba(107, 203, 119, 0.2);
+            color: #6bcb77;
+        }
+        .perm-item .pstatus.off {
+            background: rgba(255, 107, 107, 0.15);
+            color: #ff6b6b;
+        }
+
+        /* === PERFORMANS MODU === */
+        .perf-control {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 10px 0;
+        }
+        .perf-bar {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .perf-bar .label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            min-width: 80px;
+        }
+        .perf-bar .track {
+            flex: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .perf-bar .track .fill {
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #6bcb77, #ffd93d, #ff6b6b);
+            transition: width 0.5s;
+        }
+        .perf-bar .val {
+            font-size: 14px;
+            font-weight: 600;
+            min-width: 40px;
+            text-align: right;
+        }
+
+        /* === GÖREV ÇUBUĞU === */
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: rgba(16, 16, 30, 0.96);
+            backdrop-filter: blur(30px);
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            gap: 6px;
+            z-index: 9999;
+        }
+        .taskbar .start-btn {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 22px;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+        .taskbar .start-btn:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .taskbar .task-items {
+            display: flex;
+            gap: 4px;
+            flex: 1;
+            justify-content: center;
+        }
+        .taskbar .task-item {
+            padding: 4px 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 6px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .taskbar .task-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .taskbar .task-item.active {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            border-bottom: 2px solid #ff6b6b;
+        }
+        .taskbar .clock {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+            margin-left: auto;
+            padding: 4px 10px;
+        }
+
+        /* === SAĞ TIK MENÜSÜ === */
+        .context-menu {
+            position: fixed;
+            background: rgba(28, 28, 44, 0.96);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 4px 0;
+            min-width: 200px;
+            display: none;
+            z-index: 99999;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+        }
+        .context-menu-item {
+            padding: 8px 18px;
+            color: #fff;
+            cursor: pointer;
+            transition: 0.15s;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .context-menu-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .context-menu-item.danger {
+            color: #ff6b6b;
+        }
+        .context-menu-item.danger:hover {
+            background: rgba(255, 107, 107, 0.12);
+        }
+
+        /* === KİLİT EKRANI === */
+        .lock-screen {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(30px);
+            z-index: 999999;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+        .lock-screen.active {
+            display: flex;
+        }
+        .lock-screen .time {
+            font-size: 72px;
+            font-weight: 200;
+            letter-spacing: 4px;
+        }
+        .lock-screen .date {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 8px;
+        }
+        .lock-screen .unlock-btn {
+            margin-top: 40px;
+            padding: 14px 48px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
             transition: 0.3s;
         }
-        .links button:hover { background: #ff6b6b; border-color: #ff6b6b; }
-        .info {
-            color: rgba(255,255,255,0.5);
-            text-align: center;
-            margin-top: 15px;
-            font-size: 13px;
+        .lock-screen .unlock-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
-        .banana-icon { font-size: 24px; }
+
+        /* === SCROLLBAR === */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
         @media (max-width: 600px) {
-            .header { flex-direction: column; text-align: center; }
-            .logo { font-size: 28px; }
+            .desktop-icons .desktop-icon {
+                width: 60px;
+                padding: 6px 4px;
+            }
+            .desktop-icons .desktop-icon .icon {
+                font-size: 32px;
+            }
+            .desktop-icons .desktop-icon .label {
+                font-size: 10px;
+            }
+            .window {
+                min-width: 280px;
+                min-height: 200px;
+            }
+            .widget-grid {
+                grid-template-columns: 1fr;
+            }
+            .snap-grid-3,
+            .snap-grid-4 {
+                grid-template-columns: 1fr 1fr;
+            }
+            .taskbar .task-item {
+                font-size: 10px;
+                padding: 2px 8px;
+            }
+            .lock-screen .time {
+                font-size: 48px;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- HEADER -->
-    <div class="header">
-        <div class="logo">
-            🍌 Videos <span>Far</span>
-            <small>🎯 ShopGunBanana Kanali</small>
+    <!-- === KİLİT EKRANI === -->
+    <div class="lock-screen" id="lockScreen">
+        <div class="time" id="lockTime">00:00</div>
+        <div class="date" id="lockDate">1 Ocak 2026</div>
+        <button class="unlock-btn" onclick="unlockSystem()">🔓 Kiliti Aç</button>
+    </div>
+
+    <!-- === MASAÜSTÜ === -->
+    <div class="desktop" id="desktop">
+
+        <!-- === MASAÜSTÜ SIMGELERİ === -->
+        <div class="desktop-icons">
+            <div class="desktop-icon" data-window="explorer">
+                <div class="icon">📁</div>
+                <div class="label">Dosya Gezgini</div>
+            </div>
+            <div class="desktop-icon" data-window="copilot">
+                <div class="icon">🤖</div>
+                <div class="label">Microsoft Copilot</div>
+            </div>
+            <div class="desktop-icon" data-window="snap">
+                <div class="icon">🪟</div>
+                <div class="label">Snap Layouts</div>
+            </div>
+            <div class="desktop-icon" data-window="widgets">
+                <div class="icon">📊</div>
+                <div class="label">Widget'lar</div>
+            </div>
+            <div class="desktop-icon" data-window="perf">
+                <div class="icon">⚡</div>
+                <div class="label">Performans Modu</div>
+            </div>
+            <div class="desktop-icon" data-window="perms">
+                <div class="icon">🔒</div>
+                <div class="label">İzin Ayarları</div>
+            </div>
+            <div class="desktop-icon" id="lockIcon">
+                <div class="icon">🔐</div>
+                <div class="label">Kilit Ekranı</div>
+            </div>
         </div>
-        <div class="channel-info">
-            <div class="name">🍌 ShopGunBanana</div>
-            <div class="subs">📍 YouTube Kanalı</div>
+
+        <!-- === PENCERE: DOSYA GEZGİNİ === -->
+        <div class="window" id="explorer" style="width:680px;height:480px;top:80px;left:80px;">
+            <div class="window-header">
+                <div class="window-title">📁 Dosya Gezgini</div>
+                <div class="window-controls">
+                    <button class="min" onclick="minWin('explorer')">─</button>
+                    <button class="max" onclick="maxWin('explorer')">☐</button>
+                    <button class="cls" onclick="closeWin('explorer')">✕</button>
+                </div>
+            </div>
+            <div class="window-body">
+                <div class="file-explorer">
+                    <div class="file-tabs">
+                        <button class="tab active">📂 Bilgisayar</button>
+                        <button class="tab">📥 İndirilenler</button>
+                        <button class="tab">🖼️ Resimler</button>
+                    </div>
+                    <div class="file-actions">
+                        <button>📤 Yeni Klasör</button>
+                        <button>✂️ Kes</button>
+                        <button>📋 Kopyala</button>
+                        <button class="danger">🗑️ Sil</button>
+                    </div>
+                    <div class="file-grid" id="fileGrid">
+                        <div class="file-item"><span class="ficon">📁</span><span class="fname">Belgeler</span></div>
+                        <div class="file-item"><span class="ficon">📁</span><span class="fname">Resimler</span></div>
+                        <div class="file-item"><span class="ficon">📁</span><span class="fname">Müzik</span></div>
+                        <div class="file-item"><span class="ficon">📁</span><span class="fname">Videolar</span></div>
+                        <div class="file-item"><span class="ficon">📄</span><span class="fname">Proje.txt</span></div>
+                        <div class="file-item"><span class="ficon">🖼️</span><span class="fname">Foto.jpg</span></div>
+                    </div>
+                    <div class="file-upload-area" id="fileDrop">
+                        📤 Dosyaları buraya sürükleyin veya tıklayın
+                        <input type="file" multiple style="display:none;" id="fileUpload">
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <!-- === PENCERE: COPILOT === -->
+        <div class="window" id="copilot" style="width:500px;height:450px;top:120px;left:200px;">
+            <div class="window-header">
+                <div class="window-title">🤖 Microsoft Copilot</div>
+                <div class="window-controls">
+                    <button class="min" onclick="minWin('copilot')">─</button>
+                    <button class="max" onclick="maxWin('copilot')">☐</button>
+                    <button class="cls" onclick="closeWin('copilot')">✕</button>
+                </div>
+            </div>
+            <div class="window-body">
+                <div class="copilot-chat">
+                    <div class="copilot-messages" id="copilotMessages">
+                        <div class="copilot-msg ai">
+                            <div class="label">🤖 Copilot</div>
+                            Merhaba! Ben Microsoft Copilot. Metin özetleyebilir, görsel üretebilir ve sistem ayarlarını değiştirebilirim. Size nasıl yardımcı olabilirim?
+                        </div>
+                    </div>
+                    <div class="copilot-input">
+                        <input type="text" id="copilotInput" placeholder="Mesajınızı yazın...">
+                        <button onclick="sendCopilot()">Gönder</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === PENCERE: SNAP LAYOUTS === -->
+        <div class="window" id="snap" style="width:550px;height:400px;top:160px;left:280px;">
+            <div class="window-header">
+                <div class="window-title">🪟 Snap Layouts</div>
+                <div class="window-controls">
+                    <button class="min" onclick="minWin('snap')">─</button>
+                    <button class="max" onclick="maxWin('snap')">☐</button>
+                    <button class="cls" onclick="closeWin('snap')">✕</button>
+                </div>
+            </div>
+            <div class="window-body">
+                <p style="color:rgba(255,255,255,0.4);font-size:14px;margin-bottom:12px;">Pencereleri hızlıca organize etmek için bir düzen seçin:</p>
+                <div class="snap-grid snap-grid-2">
+                    <div class="snap-item" onclick="snapLayout(2)">📱 2 Bölmeli</div>
+                    <div class="snap-item" onclick="snapLayout(2)">📱 2 Bölmeli</div>
+                </div>
+                <div class="snap-grid snap-grid-3" style="margin-top:6px;">
+                    <div class="snap-item" onclick="snapLayout(3)">📱 3 Bölmeli</div>
+                    <div class="snap-item" onclick="snapLayout(3)">📱 3 Bölmeli</div>
+                    <div class="snap-item" onclick="snapLayout(3)">📱 3 Bölmeli</div>
+                </div>
+                <div class="snap-grid snap-grid-4" style="margin-top:6px;">
+                    <div class="snap-item" onclick="snapLayout(4)">📱 4 Bölmeli</div>
+                    <div class="snap-item" onclick="snapLayout(4)">📱 4 Bölmeli</div>
+                    <div class="snap-item" onclick="snapLayout(4)">📱 4 Bölmeli</div>
+                    <div class="snap-item" onclick="snapLayout(4)">📱 4 Bölmeli</div>
+                </div>
+                <div style="margin-top:10px;color:rgba(255,255,255,0.2);font-size:12px;text-align:center;">💡 Seçtiğiniz düzen pencereleri otomatik olarak düzenler</div>
+            </div>
+        </div>
+
+        <!-- === PENCERE: WIDGET'LAR === -->
+        <div class="window" id="widgets" style="width:480px;height:380px;top:100px;left:150px;">
+            <div class="window-header">
+                <div class="window-title">📊 Widget'lar</div>
+                <div class="window-controls">
+                    <button class="min" onclick="minWin('widgets')">─</button>
+                    <button class="max" onclick="maxWin('widgets')">☐</button>
+                    <button class="cls" onclick="closeWin('widgets')">✕</button>
+                </div>
+            </div>
+            <div class="window-body">
+                <div class="widget-grid">
+                    <div class="widget-card">
+                        <div class="wtitle">🌤️ Hava Durumu</div>
+                        <div class="wvalue weather">24°C <span style="font-size:16px;color:rgba(255,255,255,0.3);">İstanbul</span></div>
+                    </div>
+                    <div class="widget-card">
+                        <div class="wtitle">📈 Borsa</div>
+                        <div class="wvalue stock">+2.4% <span style="font-size:16px;color:rgba(255,255,255,0.3);">BIST 100</span></div>
+                    </div>
+                    <div class="widget-card">
+                        <div class="wtitle">⚽ Spor</div>
+                        <div class="wvalue sport">3-1 <span style="font-size:16px;color:rgba(255,255,255,0.3);">Galatasaray - Fenerbahçe</span></div>
+                    </div>
+                    <div class="widget-card">
+                        <div class="wtitle">💵 Döviz</div>
+                        <div class="wvalue" style="color:#ffd93d;">$1 = ₺34.50</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === PENCERE: PERFORMANS MODU === -->
+        <div class="window" id="perf" style="width:520px;height:350px;top:130px;left:220px;">
+            <div class="window-header">
+                <div class="window-title">⚡ Gelişmiş Performans Modu</div>
+                <div class="window-controls">
+                    <button class="min" onclick="minWin('perf')">─</button>
+                    <button class="max" onclick="maxWin('perf')">☐</button>
+                    <button class="cls" onclick="closeWin('perf')">✕</button>
+                </div>
+            </div>
+            <div class="window-body">
+                <div class="perf-control">
+                    <div class="perf-bar">
+                        <span class="label">⚡ İşlemci</span>
+                        <div class="track"><div class="fill" id="cpuFill" style="width:45%;"></div></div>
+                        <span class="val" id="cpuVal">45%</span>
+                    </div>
+                    <div class="perf-bar">
+                        <span class="label">🧠 RAM</span>
+                        <div class="track"><div class="fill" id="ramFill" style="width:62%;"></div></div>
+                        <span class="val" id="ramVal">62%</span>
+                    </div>
+                    <div class="perf-bar">
+                        <span class="label">🎮 GPU</span>
+                        <div class="track"><div class="fill" id="gpuFill" style="width:28%;"></div></div>
+                        <span class="val" id="gpuVal">28%</span>
+                    </div>
+                    <div style="display:flex;gap:12px;margin-top:12px;">
+                        <button class="btn" style="background:rgba(255,255,255,0.06);color:#fff;border:none;padding:8px 20px;border-radius:30px;cursor:pointer;" onclick="boostPerf()">🚀 Turbo Mod</button>
+                        <button class="btn" style="background:rgba(255,255,255,0.06);color:#fff;border:none;padding:8px 20px;border-radius:30px;cursor:pointer;" onclick="resetPerf()">🔄 Sıfırla</button>
+                    </div>
+                    <div style="margin-top:10px;color:rgba(255,255,255,0.2);font-size:12px;">Uygulama başlatma süreleri optimize ediliyor...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === PENCERE: İZİN AYARLARI === -->
+        <div class="window" id="perms" style="width:480px;height:380px;top:150px;left:180px;">
+            <div class="window-header">
+                <div class="window-title">🔒 İzin Ayarları</div>
+                <div class="window-controls">
+                    <button class="min" onclick="minWin('perms')">─</button>
+                    <button class="max" onclick="maxWin('perms')">☐</button>
+                    <button class="cls" onclick="closeWin('perms')">✕</button>
+                </div>
+            </div>
+            <div class="window-body">
+                <div class="perm-list">
+                    <div class="perm-item">
+                        <span class="pname">📷 Kamera</span>
+                        <span class="pstatus on" onclick="togglePerm(this)">Açık</span>
+                    </div>
+                    <div class="perm-item">
+                        <span class="pname">🎤 Mikrofon</span>
+                        <span class="pstatus on" onclick="togglePerm(this)">Açık</span>
+                    </div>
+                    <div class="perm-item">
+                        <span class="pname">📍 Konum</span>
+                        <span class="pstatus off" onclick="togglePerm(this)">Kapalı</span>
+                    </div>
+                    <div class="perm-item">
+                        <span class="pname">📂 Dosya Erişimi</span>
+                        <span class="pstatus on" onclick="togglePerm(this)">Açık</span>
+                    </div>
+                    <div class="perm-item">
+                        <span class="pname">🔔 Bildirimler</span>
+                        <span class="pstatus on" onclick="togglePerm(this)">Açık</span>
+                    </div>
+                </div>
+                <div style="margin-top:12px;color:rgba(255,255,255,0.2);font-size:12px;text-align:center;">Uygulama bazında detaylı izin yönetimi</div>
+            </div>
+        </div>
+
+        <!-- === SAĞ TIK MENÜSÜ === -->
+        <div class="context-menu" id="contextMenu">
+            <div class="context-menu-item" onclick="openWin('explorer')">📁 Dosya Gezgini</div>
+            <div class="context-menu-item" onclick="openWin('copilot')">🤖 Copilot</div>
+            <div class="context-menu-item" onclick="openWin('snap')">🪟 Snap Layouts</div>
+            <div class="context-menu-item" onclick="openWin('widgets')">📊 Widget'lar</div>
+            <div class="context-menu-item" onclick="openWin('perf')">⚡ Performans</div>
+            <div class="context-menu-item" onclick="openWin('perms')">🔒 İzinler</div>
+            <div style="border-top:1px solid rgba(255,255,255,0.04);margin:4px 12px;"></div>
+            <div class="context-menu-item danger" onclick="lockSystem()">🔐 Kilit Ekranı</div>
+        </div>
+
+        <!-- === GÖREV ÇUBUĞU === -->
+        <div class="taskbar">
+            <button class="start-btn" onclick="toggleStartMenu()">🪟</button>
+            <div class="task-items" id="taskItems"></div>
+            <div class="clock" id="clock">00:00</div>
+        </div>
+
     </div>
 
-    <!-- ABONE SAYACI -->
-    <div class="subscriber-counter">
-        <div class="label">📊 TAHMİNİ ABONE SAYISI</div>
-        <div class="big-number" id="subCount">???</div>
-        <div class="label">🎯 Sence kaç abonem var? 👇</div>
-    </div>
+    <script>
+        // ========================================
+        // PENCERE YÖNETİMİ
+        // ========================================
+        let zIndex = 10;
+        const winIds = ['explorer', 'copilot', 'snap', 'widgets', 'perf', 'perms'];
 
-    <!-- ARAMA -->
-    <div class="search">
-        <input type="text" id="videoInput" placeholder="Video ID girin veya URL yapıştırın...">
-        <button onclick="loadVideo()">▶ İzle</button>
-    </div>
-
-    <!-- VİDEO OYNATICI - ShopGunBanana Kanalından -->
-    <div class="video-box">
-        <iframe id="videoFrame" 
-                src="https://www.youtube.com/embed?listType=user_uploads&list=UCXXXXXXXXXX" 
-                allowfullscreen>
-        </iframe>
-    </div>
-
-    <!-- HIZLI LİNKLER -->
-    <div class="links">
-        <button onclick="changeVideo('dQw4w9WgXcQ')">🎵 Müzik</button>
-        <button onclick="changeVideo('kJQP7kiw5Fk')">🎤 Pop</button>
-        <button onclick="changeVideo('fJ9rUzIMcZQ')">🎸 Rock</button>
-        <button onclick="openChannel()">📺 Kanalı Aç</button>
-    </div>
-
-    <div class="info">
-        🍌 <strong>ShopGunBanana</strong> - YouTube kanalınızdan videolar burada!
-        <br>⬇️ Tahminini yaz ve abone sayını keşfet!
-    </div>
-</div>
-
-<script>
-    // VİDEO YÜKLEME FONKSİYONU
-    function loadVideo() {
-        const input = document.getElementById('videoInput').value.trim();
-        const frame = document.getElementById('videoFrame');
-        if (!input) { alert('🎯 Video ID veya URL girin!'); return; }
-        let id = input;
-        if (id.includes('v=')) id = id.split('v=')[1].split('&')[0];
-        if (id.includes('youtu.be/')) id = id.split('youtu.be/')[1].split('?')[0];
-        if (id.includes('/embed/')) id = id.split('/embed/')[1].split('?')[0];
-        if (id.length !== 11) { 
-            // Eğer ID geçersizse kanal oynatma listesini göster
-            alert('⚠️ Geçersiz ID! Kanal videoları açılıyor...');
-            frame.src = 'https://www.youtube.com/embed?listType=user_uploads&list=UCXXXXXXXXXX';
-            return;
+        function openWin(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.style.display = 'block';
+            el.classList.add('active');
+            zIndex++;
+            el.style.zIndex = zIndex;
+            updateTaskbar();
         }
-        frame.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1';
-        document.getElementById('videoInput').value = '';
-    }
 
-    function changeVideo(id) {
-        document.getElementById('videoFrame').src = 'https://www.youtube.com/embed/' + id + '?autoplay=1';
-        document.getElementById('videoInput').value = '';
-    }
+        function closeWin(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.style.display = 'none';
+            el.classList.remove('active');
+            updateTaskbar();
+        }
 
-    function openChannel() {
-        window.open('https://www.youtube.com/@ShopGunBanana', '_blank');
-    }
+        function minWin(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.style.display = 'none';
+            el.classList.remove('active');
+            updateTaskbar();
+        }
 
-    // Enter tuşu
-    document.getElementById('videoInput').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') loadVideo();
-    });
+        function maxWin(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.classList.toggle('maximized');
+        }
 
-    // 🔥 Rastgele abone sayısı tahmini (eğlence)
-    function randomSubscriber() {
-        const possible = [
-            '10', '25', '50', '75', '100', '150', '200', '350', '500', 
-            '750', '1.000', '1.500', '2.000', '5.000', '10.000', '25.000',
-            '50.000', '100.000', '250.000', '500.000', '1.000.000'
-        ];
-        return possible[Math.floor(Math.random() * possible.length)];
-    }
+        function focusWin(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            zIndex++;
+            el.style.zIndex = zIndex;
+            el.classList.add('active');
+            updateTaskbar();
+        }
 
-    // Sayfa yüklenince abone sayısını göster
-    window.onload = function() {
-        const subCount = document.getElementById('subCount');
-        subCount.textContent = randomSubscriber() + '+';
-        subCount.style.cursor = 'pointer';
-        subCount.title = 'Tıkla ve yeni tahmin gör!';
-        subCount.onclick = function() {
-            this.textContent = randomSubscriber() + '+';
-            this.style.transform = 'scale(1.2)';
-            setTimeout(() => { this.style.transform = 'scale(1)'; }, 300);
-        };
-    };
-</script>
+        // ========================================
+        // GÖREV ÇUBUĞU
+        // ========================================
+        function updateTaskbar() {
+            const container = document.getElementById('taskItems');
+            container.innerHTML = '';
+            const titles = {
+                explorer: '📁 Dosya Gezgini',
+                copilot: '🤖 Copilot',
+                snap: '🪟 Snap Layouts',
+                widgets: '📊 Widget\'lar',
+                perf: '⚡ Performans',
+                perms: '🔒 İzinler'
+            };
+            winIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el && el.style.display !== 'none') {
+                    const btn = document.createElement('button');
+                    btn.className = 'task-item active';
+                    btn.textContent = titles[id] || id;
+                    btn.onclick = () => {
+                        if (el.style.display === 'none') openWin(id);
+                        else focusWin(id);
+                    };
+                    container.appendChild(btn);
+                }
+            });
+        }
+
+        // ========================================
+        // SAAT
+        // ========================================
+        function updateClock() {
+            const now = new Date();
+            const time = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+            document.getElementById('clock').textContent = time;
+            document.getElementById('lockTime').textContent = now.toLocaleTimeString('tr-TR', { hour: '2-digit',
+                minute: '2-digit' });
+            document.getElementById('lockDate').textContent = now.toLocaleDateString('tr-TR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // ========================================
+        // MASAÜSTÜ SIMGE TIKLAMA
+        // ========================================
+        document.querySelectorAll('.desktop-icon[data-window]').forEach(icon => {
+            icon.addEventListener('dblclick', function() {
+                const id = this.dataset.window;
+                if (id) openWin(id);
+            });
+        });
+
+        document.getElementById('lockIcon').addEventListener('click', function() {
+            lockSystem();
+        });
+
+        // ========================================
+        // SAĞ TIK MENÜSÜ
+        // ========================================
+        document.getElementById('desktop').addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            const menu = document.getElementById('contextMenu');
+            menu.style.display = 'block';
+            menu.style.left = Math.min(e.clientX, window.innerWidth - 220) + 'px';
+            menu.style.top = Math.min(e.clientY, window.innerHeight - 300) + 'px';
+        });
+
+        document.addEventListener('click', function() {
+            document.getElementById('contextMenu').style.display = 'none';
+        });
+
+        // ========================================
+        // START MENÜSÜ
+        // ========================================
+        let startOpen = false;
+
+        function toggleStartMenu() {
+            startOpen = !startOpen;
+            const menu = document.getElementById('contextMenu');
+            if (startOpen) {
+                menu.style.display = 'block';
+                menu.style.left = '10px';
+                menu.style.top = (window.innerHeight - 60 - 250) + 'px';
+            } else {
+                menu.style.display = 'none';
+            }
+        }
+
+        // ========================================
+        // KİLİT EKRANI
+        // ========================================
+        function lockSystem() {
+            document.getElementById('lockScreen').classList.add('active');
+            document.getElementById('desktop').style.opacity = '0.3';
+        }
+
+        function unlockSystem() {
+            document.getElementById('lockScreen').classList.remove('active');
+            document.getElementById('desktop').style.opacity = '1';
+        }
+
+        // ========================================
+        // PENCERE SÜRÜKLEME
+        // ========================================
+        document.querySelectorAll('.window-header').forEach(header => {
+            let dragging = false,
+                ox, oy;
+            const win = header.parentElement;
+            header.addEventListener('mousedown', function(e) {
+                if (win.classList.contains('maximized')) return;
+                dragging = true;
+                const rect = win.getBoundingClientRect();
+                ox = e.clientX - rect.left;
+                oy = e.clientY - rect.top;
+                win.style.cursor = 'grabbing';
+                focusWin(win.id);
+            });
+            document.addEventListener('mousemove', function(e) {
+                if (!dragging) return;
+                const w = document.querySelector('.window.active');
+                if (!w) return;
+                let x = e.clientX - ox,
+                    y = e.clientY - oy;
+                x = Math.max(0, Math.min(x, window.innerWidth - w.offsetWidth));
+                y = Math.max(0, Math.min(y, window.innerHeight - w.offsetHeight - 60));
+                w.style.left = x + 'px';
+                w.style.top = y + 'px';
+            });
+            document.addEventListener('mouseup', function() {
+                dragging = false;
+                document.querySelectorAll('.window').forEach(w => w.style.cursor = 'default');
+            });
+        });
+
+        // ========================================
+        // SNAP LAYOUTS
+        // ========================================
+        function snapLayout(count) {
+            const w = window.innerWidth;
+            const h = window.innerHeight - 60;
+            const pad = 10;
+            const size = (w - pad * (count + 1)) / count;
+            const windows = document.querySelectorAll('.window.active');
+            const wins = Array.from(windows).filter(w => w.style.display !== 'none');
+            wins.forEach((win, i) => {
+                if (i < count) {
+                    win.style.width = size + 'px';
+                    win.style.height = (h - 40) + 'px';
+                    win.style.left = (pad + i * (size + pad)) + 'px';
+                    win.style.top = '10px';
+                    win.classList.remove('maximized');
+                }
+            });
+            // Bilgi mesajı
+            const snapWin = document.getElementById('snap');
+            const body = snapWin.querySelector('.window-body');
+            const info = document.createElement('div');
+            info.style.cssText =
+                'background:rgba(107,203,119,0.1);padding:10px;border-radius:8px;color:#6bcb77;font-size:13px;text-align:center;margin-top:8px;';
+            info.textContent = `✅ ${count} pencere düzenlendi!`;
+            body.prepend(info);
+            setTimeout(() => info.remove(), 3000);
+        }
+
+        // ========================================
+        // COPILOT
+        // ========================================
+        function sendCopilot() {
+            const input = document.getElementById('copilotInput');
+            const msg = input.value.trim();
+            if (!msg) return;
+            const container = document.getElementById('copilotMessages');
+            const userDiv = document.createElement('div');
+            userDiv.className = 'copilot-msg user';
+            userDiv.innerHTML = `<div class="label">👤 Siz</div>${msg}`;
+            container.appendChild(userDiv);
+            input.value = '';
+            container.scrollTop = container.scrollHeight;
+
+            // AI Yanıtı
+            setTimeout(() => {
+                const responses = [
+                    'Harika bir soru! Bunu düşünelim... 🤔',
+                    'Size yardımcı olabilirim! Detaylandıralım.',
+                    'Bu konuda şu önerilerim var: ...',
+                    'Harika! Sistem ayarlarınızı optimize edelim mi?',
+                    'Görsel üretmek ister misiniz? Bir açıklama yazın.'
+                ];
+                const aiDiv = document.createElement('div');
+                aiDiv.className = 'copilot-msg ai';
+                const reply = responses[Math.floor(Math.random() * responses.length)];
+                aiDiv.innerHTML = `<div class="label">🤖 Copilot</div>${reply}`;
+                container.appendChild(aiDiv);
+                container.scrollTop = container.scrollHeight;
+            }, 600);
+        }
+
+        document.getElementById('copilotInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendCopilot();
+        });
+
+        // ========================================
+        // DOSYA GEZGİNİ - DRAG & DROP
+        // ========================================
+        const dropArea = document.getElementById('fileDrop');
+        const fileInput = document.getElementById('fileUpload');
+
+        dropArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.classList.add('dragover');
+        });
+        dropArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+        });
+        dropArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                const grid = document.getElementById('fileGrid');
+                for (let f of files) {
+                    const item = document.createElement('div');
+                    item.className = 'file-item';
+                    const icon = f.type.startsWith('image') ? '🖼️' : f.type.startsWith('video') ? '🎬' : '📄';
+                    item.innerHTML =
+                        `<span class="ficon">${icon}</span><span class="fname">${f.name.substring(0,12)}</span>`;
+                    grid.appendChild(item);
+                }
+                // Animasyonlu bilgi
+                const info = document.createElement('div');
+                info.style.cssText =
+                    'background:rgba(107,203,119,0.1);padding:8px;border-radius:8px;color:#6bcb77;font-size:13px;text-align:center;';
+                info.textContent = `✅ ${files.length} dosya yüklendi!`;
+                dropArea.parentNode.insertBefore(info, dropArea);
+                setTimeout(() => info.remove(), 3000);
+            }
+        });
+
+        dropArea.addEventListener('click', function() {
+            fileInput.click();
+        });
+        fileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                const grid = document.getElementById('fileGrid');
+                for (let f of this.files) {
+                    const item = document.createElement('div');
+                    item.className = 'file-item';
+                    const icon = f.type.startsWith('image') ? '🖼️' : f.type.startsWith('video') ? '🎬' : '📄';
+                    item.innerHTML =
+                        `<span class="ficon">${icon}</span><span class="fname">${f.name.substring(0,12)}</span>`;
+                    grid.appendChild(item);
+                }
+                this.value = '';
+            }
+        });
+
+        // ========================================
+        // PERFORMANS MODU
+        // ========================================
+        function updatePerf() {
+            const cpu = Math.floor(Math.random() * 30 + 20);
+            const ram = Math.floor(Math.random() * 40 + 30);
+            const gpu = Math.floor(Math.random() * 25 + 10);
+            document.getElementById('cpuFill').style.width = cpu + '%';
+            document.getElementById('cpuVal').textContent = cpu + '%';
+            document.getElementById('ramFill').style.width = ram + '%';
+            document.getElementById('ramVal').textContent = ram + '%';
+            document.getElementById('gpuFill').style.width = gpu + '%';
+            document.getElementById('gpuVal').textContent = gpu + '%';
+        }
+        setInterval(updatePerf, 3000);
+
+        function boostPerf() {
+            document.getElementById('cpuFill').style.width = '85%';
+            document.getElementById('cpuVal').textContent = '85%';
+            document.getElementById('ramFill').style.width = '90%';
+            document.getElementById('ramVal').textContent = '90%';
+            document.getElementById('gpuFill').style.width = '95%';
+            document.getElementById('gpuVal').textContent = '95%';
+            // Mesaj
+            const body = document.querySelector('#perf .window-body');
+            const msg = document.createElement('div');
+            msg.style.cssText =
+                'background:rgba(255,215,0,0.1);padding:10px;border-radius:8px;color:#ffd93d;font-size:13px;text-align:center;margin-top:8px;';
+            msg.textContent = '🚀 Turbo Mod Aktif! Performans zirvede!';
+            body.prepend(msg);
+            setTimeout(() => msg.remove(), 3000);
+        }
+
+        function resetPerf() {
+            updatePerf();
+            const body = document.querySelector('#perf .window-body');
+            const msg = document.createElement('div');
+            msg.style.cssText =
+                'background:rgba(255,255,255,0.05);padding:10px;border-radius:8px;color:rgba(255,255,255,0.5);font-size:13px;text-align:center;margin-top:8px;';
+            msg.textContent = '🔄 Performans ayarları sıfırlandı.';
+            body.prepend(msg);
+            setTimeout(() => msg.remove(), 3000);
+        }
+
+        // ========================================
+        // İZİN AYARLARI
+        // ========================================
+        function togglePerm(el) {
+            if (el.classList.contains('on')) {
+                el.classList.remove('on');
+                el.classList.add('off');
+                el.textContent = 'Kapalı';
+            } else {
+                el.classList.remove('off');
+                el.classList.add('on');
+                el.textContent = 'Açık';
+            }
+        }
+
+        // ========================================
+        // BAŞLANGIÇTA DOSYA GEZGİNİ AÇ
+        // ========================================
+        setTimeout(() => {
+            openWin('explorer');
+        }, 500);
+
+        console.log('🪟 Windows 11 - Videos Far Edition Yüklendi!');
+        console.log('📌 Tüm özellikler aktif: Copilot, Snap, Widgets, Performans, İzinler');
+    </script>
 
 </body>
 </html>
